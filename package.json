@@ -3,6 +3,7 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
+    "lint": "biome check .",
     "test": "bun test",
     "test:w": "bun test --watch",
     "build": "bun build --entry src/index.ts --outdir dist"
