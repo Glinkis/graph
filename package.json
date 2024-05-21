@@ -1,13 +1,13 @@
 {
-	"name": "graph",
-	"module": "index.ts",
-	"type": "module",
-	"scripts": {
-		"build": "bun build --entry index.ts --outdir dist"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.7.3",
-		"@types/bun": "latest",
-		"typescript": "^5.4.5"
-	}
+  "name": "graph",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "bun build --entry src/index.ts --outdir dist"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.3",
+    "@types/bun": "latest",
+    "typescript": "^5.4.5"
+  }
 }
