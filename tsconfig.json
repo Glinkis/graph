@@ -10,7 +10,7 @@
 
     // Bundler mode
     "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "verbatimModuleSyntax": true,
     "noEmit": true,
 
