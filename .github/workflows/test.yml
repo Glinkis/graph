@@ -1,12 +1,11 @@
-# create a basic testing workflow
 name: test
+
 on:
   push:
-    branches:
-      - master
   pull_request:
+  workflow_dispatch:
     branches:
-      - master
+      - main
 
 jobs:
   test:
