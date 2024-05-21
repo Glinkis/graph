@@ -1,4 +1,4 @@
-import { expect, it } from "bun:test";
+import { expect, it, mock } from "bun:test";
 import { Edge, Graph, Node } from "./index.js";
 
 it("can create a graph with several nodes and edges", () => {
@@ -23,4 +23,23 @@ it("can create a graph with several nodes and edges", () => {
     nodes: [node1, node2, node3],
     edges: [edge1, edge2],
   });
+});
+
+it("emits events when nodes and edges are added", () => {
+  const graph = new Graph();
+
+  const onNodeAdded = mock();
+  const onEdgeAdded = mock();
+
+  graph.events.on("nodeAdded", onNodeAdded);
+  graph.events.on("edgeAdded", onEdgeAdded);
+
+  const node = new Node();
+  const edge = new Edge(node, node);
+
+  graph.addNode(node);
+  graph.addEdge(edge);
+
+  expect(onNodeAdded).toHaveBeenCalledTimes(1);
+  expect(onEdgeAdded).toHaveBeenCalledTimes(1);
 });

@@ -1,3 +1,4 @@
+import { EventEmitter } from "./EventEmitter.js";
 import { generateId } from "./utils.js";
 
 /**
@@ -34,11 +35,15 @@ export class Graph {
   private nodes: Node[] = [];
   private edges: Edge[] = [];
 
+  public events = new EventEmitter();
+
   public addNode(node: Node) {
     this.nodes.push(node);
+    this.events.emit("nodeAdded");
   }
 
   public addEdge(edge: Edge) {
     this.edges.push(edge);
+    this.events.emit("edgeAdded");
   }
 }
