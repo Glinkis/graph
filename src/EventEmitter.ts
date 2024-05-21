@@ -34,4 +34,8 @@ export class EventEmitter {
       }
     }
   }
+
+  public clear() {
+    this.listeners.clear();
+  }
 }
