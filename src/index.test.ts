@@ -13,10 +13,10 @@ it("can create a graph with several nodes and edges", () => {
   const node3 = new Node();
   graph.addNode(node3);
 
-  const edge1 = new Edge(node1, node2);
+  const edge1 = new Edge(node1.id, node2.id);
   graph.addEdge(edge1);
 
-  const edge2 = new Edge(node2, node3);
+  const edge2 = new Edge(node2.id, node3.id);
   graph.addEdge(edge2);
 
   expect(graph).toMatchObject({
@@ -35,7 +35,7 @@ it("emits events when nodes and edges are added", () => {
   graph.events.on("edgeAdded", onEdgeAdded);
 
   const node = new Node();
-  const edge = new Edge(node, node);
+  const edge = new Edge(node.id, node.id);
 
   graph.addNode(node);
   graph.addEdge(edge);

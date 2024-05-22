@@ -6,12 +6,12 @@ import { generateId } from "./utils.js";
  * @see https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge
  */
 export class Edge {
-  source: string;
-  target: string;
+  readonly source: string;
+  readonly target: string;
 
-  constructor(source: Node, target: Node) {
-    this.source = source.id;
-    this.target = target.id;
+  constructor(source: string, target: string) {
+    this.source = source;
+    this.target = target;
   }
 }
 
@@ -20,11 +20,7 @@ export class Edge {
  * @see https://en.wikipedia.org/wiki/Vertex_(graph_theory)
  */
 export class Node {
-  id: string;
-
-  constructor() {
-    this.id = generateId();
-  }
+  readonly id = generateId();
 }
 
 /**
@@ -32,20 +28,20 @@ export class Node {
  * @see https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)
  */
 export class Graph {
-  private nodes: Node[] = [];
-  private edges: Edge[] = [];
+  private readonly nodes: Node[] = [];
+  private readonly edges: Edge[] = [];
 
-  public events = new EventEmitter<{
+  readonly events = new EventEmitter<{
     nodeAdded: (node: Node) => void;
     edgeAdded: (edge: Edge) => void;
   }>();
 
-  public addNode(node: Node) {
+  addNode(node: Node) {
     this.nodes.push(node);
     this.events.emit("nodeAdded", node);
   }
 
-  public addEdge(edge: Edge) {
+  addEdge(edge: Edge) {
     this.edges.push(edge);
     this.events.emit("edgeAdded", edge);
   }
