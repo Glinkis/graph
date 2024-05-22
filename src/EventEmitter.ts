@@ -10,7 +10,7 @@ export class EventEmitter<EventMap extends Record<string, Callback>> {
 
   public on<Event extends keyof EventMap>(
     event: Event,
-    listener: EventMap[Event]
+    listener: EventMap[Event],
   ) {
     const currentListeners = this.listeners.get(event);
 
@@ -24,7 +24,7 @@ export class EventEmitter<EventMap extends Record<string, Callback>> {
 
   public off<Event extends keyof EventMap>(
     event: Event,
-    listener: EventMap[Event]
+    listener: EventMap[Event],
   ) {
     const currentListeners = this.listeners.get(event);
 
