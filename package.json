@@ -6,11 +6,13 @@
     "lint": "biome check .",
     "test": "bun test",
     "test:w": "bun test --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "build:canvas": "bun --watch canvas/build.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
     "@types/bun": "latest",
+    "bun-plugin-html": "^2.0.0",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   }
