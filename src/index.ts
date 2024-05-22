@@ -35,15 +35,18 @@ export class Graph {
   private nodes: Node[] = [];
   private edges: Edge[] = [];
 
-  public events = new EventEmitter();
+  public events = new EventEmitter<{
+    nodeAdded: (node: Node) => void;
+    edgeAdded: (edge: Edge) => void;
+  }>();
 
   public addNode(node: Node) {
     this.nodes.push(node);
-    this.events.emit("nodeAdded");
+    this.events.emit("nodeAdded", node);
   }
 
   public addEdge(edge: Edge) {
     this.edges.push(edge);
-    this.events.emit("edgeAdded");
+    this.events.emit("edgeAdded", edge);
   }
 }

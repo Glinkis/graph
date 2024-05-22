@@ -42,4 +42,7 @@ it("emits events when nodes and edges are added", () => {
 
   expect(onNodeAdded).toHaveBeenCalledTimes(1);
   expect(onEdgeAdded).toHaveBeenCalledTimes(1);
+
+  expect(onNodeAdded).toHaveBeenCalledWith(node);
+  expect(onEdgeAdded).toHaveBeenCalledWith(edge);
 });
