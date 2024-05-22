@@ -28,8 +28,8 @@ class Node {
  * @see https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)
  */
 export class Graph {
-  private readonly nodes: Node[] = [];
-  private readonly edges: Edge[] = [];
+  public readonly nodes: Node[] = [];
+  public readonly edges: Edge[] = [];
 
   readonly events = new EventEmitter<{
     nodeAdded: (node: Node) => void;
