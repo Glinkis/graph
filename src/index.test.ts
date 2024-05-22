@@ -4,20 +4,12 @@ import { Edge, Graph, Node } from "./index.js";
 it("can create a graph with several nodes and edges", () => {
   const graph = new Graph();
 
-  const node1 = new Node();
-  graph.addNode(node1);
+  const node1 = graph.addNode();
+  const node2 = graph.addNode();
+  const node3 = graph.addNode();
 
-  const node2 = new Node();
-  graph.addNode(node2);
-
-  const node3 = new Node();
-  graph.addNode(node3);
-
-  const edge1 = new Edge(node1.id, node2.id);
-  graph.addEdge(edge1);
-
-  const edge2 = new Edge(node2.id, node3.id);
-  graph.addEdge(edge2);
+  const edge1 = graph.addEdge(node1.id, node2.id);
+  const edge2 = graph.addEdge(node2.id, node3.id);
 
   expect(graph).toMatchObject({
     nodes: [node1, node2, node3],
@@ -34,11 +26,8 @@ it("emits events when nodes and edges are added", () => {
   graph.events.on("nodeAdded", onNodeAdded);
   graph.events.on("edgeAdded", onEdgeAdded);
 
-  const node = new Node();
-  const edge = new Edge(node.id, node.id);
-
-  graph.addNode(node);
-  graph.addEdge(edge);
+  const node = graph.addNode();
+  const edge = graph.addEdge(node.id, node.id);
 
   expect(onNodeAdded).toHaveBeenCalledTimes(1);
   expect(onEdgeAdded).toHaveBeenCalledTimes(1);

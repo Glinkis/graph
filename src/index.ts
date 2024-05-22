@@ -5,7 +5,7 @@ import { generateId } from "./utils.js";
  * An edge is a connection between two nodes.
  * @see https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge
  */
-export class Edge {
+class Edge {
   readonly source: string;
   readonly target: string;
 
@@ -19,7 +19,7 @@ export class Edge {
  * A node is a point in a graph.
  * @see https://en.wikipedia.org/wiki/Vertex_(graph_theory)
  */
-export class Node {
+class Node {
   readonly id = generateId();
 }
 
@@ -36,13 +36,21 @@ export class Graph {
     edgeAdded: (edge: Edge) => void;
   }>();
 
-  addNode(node: Node) {
+  addNode() {
+    const node = new Node();
+
     this.nodes.push(node);
     this.events.emit("nodeAdded", node);
+
+    return node;
   }
 
-  addEdge(edge: Edge) {
+  addEdge(source: string, target: string) {
+    const edge = new Edge(source, target);
+
     this.edges.push(edge);
     this.events.emit("edgeAdded", edge);
+
+    return edge;
   }
 }
