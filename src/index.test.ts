@@ -1,5 +1,5 @@
 import { expect, it, mock } from "bun:test";
-import { Edge, Graph, Node } from "./index.js";
+import { Graph } from "./index.js";
 
 it("can create a graph with several nodes and edges", () => {
   const graph = new Graph();
