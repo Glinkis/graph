@@ -231,14 +231,12 @@ document.body.append(fpsText);
 let lastTime = performance.now();
 
 const render = (time: DOMHighResTimeStamp) => {
-  const ratio = Math.min(devicePixelRatio, 2);
+  const ratio = Math.min(devicePixelRatio, 1);
 
   const fps = 1000 / (time - lastTime);
   lastTime = time;
 
   fpsText.textContent = `FPS: ${fps.toFixed(2)}`;
-  fpsText.textContent += `\nRATIO: ${ratio}`;
-  fpsText.textContent += `\nNODES: ${graph.nodes.length}`;
 
   canvas.width = ratio * innerWidth;
   canvas.height = ratio * innerHeight;
