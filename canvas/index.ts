@@ -163,6 +163,22 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
       }
     }
   }
+
+  if (editMode === "add-node") {
+    const node = graph.addNode();
+    nodePositions.set(node.id, getPointerPosition(event));
+  }
+
+  if (editMode === "remove-node") {
+    for (const [nodeId, node] of nodePositions) {
+      const distance = getDistanceFromPointer(event, node);
+
+      if (distance < NODE_OUTER_RADIUS) {
+        graph.removeNode(nodeId);
+        nodePositions.delete(nodeId);
+      }
+    }
+  }
 });
 
 const drawNode = (position: Position) => {

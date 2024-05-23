@@ -46,11 +46,35 @@ export class Graph {
   }
 
   addEdge(source: string, target: string) {
+    for (const edge of this.edges) {
+      if (edge.source === source && edge.target === target) {
+        return edge;
+      }
+    }
+
     const edge = new Edge(source, target);
 
     this.edges.push(edge);
     this.events.emit("edgeAdded", edge);
 
     return edge;
+  }
+
+  removeNode(nodeId: string) {
+    for (let index = 0; index < this.edges.length; index++) {
+      const edge = this.edges[index];
+      if (edge.source === nodeId || edge.target === nodeId) {
+        this.edges.splice(index, 1);
+        break;
+      }
+    }
+
+    for (let index = 0; index < this.nodes.length; index++) {
+      const node = this.nodes[index];
+      if (node.id === nodeId) {
+        this.nodes.splice(index, 1);
+        break;
+      }
+    }
   }
 }

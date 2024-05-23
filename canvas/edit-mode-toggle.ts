@@ -71,7 +71,6 @@ export const editModeToggle = createElement("fieldset", {
         type: "radio",
         name: "edit-mode",
         value: "add-node",
-        disabled: true,
       }),
     }),
     createElement("label", {
@@ -81,7 +80,6 @@ export const editModeToggle = createElement("fieldset", {
         type: "radio",
         name: "edit-mode",
         value: "remove-node",
-        disabled: true,
       }),
     }),
   ],
