@@ -1,5 +1,6 @@
 import { Graph } from "../src/index.js";
 import { COLOR_PALETTE } from "./constants.js";
+import { editMode, editModeToggle } from "./edit-mode-toggle.js";
 import { resetPositionButton } from "./reset-position-button.js";
 
 const NODE_INNER_RADIUS = 16;
@@ -9,8 +10,7 @@ const NODE_OUTER_RADIUS = NODE_INNER_RADIUS + NODE_BORDER_WIDTH;
 const EDGE_WIDTH = 8;
 
 const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-document.body.appendChild(resetPositionButton);
+document.body.append(canvas, resetPositionButton, editModeToggle);
 
 const ctx = canvas.getContext("2d");
 if (ctx == null) {
@@ -89,7 +89,7 @@ canvas.addEventListener("pointermove", (event: PointerEvent) => {
 });
 
 canvas.addEventListener("pointerdown", (event: PointerEvent) => {
-  if (event.button === 0) {
+  if (editMode === "move") {
     for (const node of nodePositions.values()) {
       const distance = getDistanceFromPointer(event, node);
 
@@ -114,9 +114,24 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
         return;
       }
     }
+
+    const initialPosition = getPointerPosition(event);
+
+    const move = (event: PointerEvent) => {
+      canvasPosition.x = event.clientX - initialPosition.x;
+      canvasPosition.y = event.clientY - initialPosition.y;
+    };
+
+    const cleanup = () => {
+      removeEventListener("pointermove", move);
+      removeEventListener("pointerup", cleanup);
+    };
+
+    addEventListener("pointermove", move);
+    addEventListener("pointerup", cleanup);
   }
 
-  if (event.button === 1) {
+  if (editMode === "add-edge") {
     for (const [node1Id, node1] of nodePositions) {
       const distance = getDistanceFromPointer(event, node1);
 
@@ -148,21 +163,6 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
       }
     }
   }
-
-  const initialPosition = getPointerPosition(event);
-
-  const move = (event: PointerEvent) => {
-    canvasPosition.x = event.clientX - initialPosition.x;
-    canvasPosition.y = event.clientY - initialPosition.y;
-  };
-
-  const cleanup = () => {
-    removeEventListener("pointermove", move);
-    removeEventListener("pointerup", cleanup);
-  };
-
-  addEventListener("pointermove", move);
-  addEventListener("pointerup", cleanup);
 });
 
 const drawNode = (position: Position) => {
