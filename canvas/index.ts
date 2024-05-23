@@ -237,11 +237,12 @@ const render = (time: DOMHighResTimeStamp) => {
 
   fpsText.textContent = `FPS: ${fps.toFixed(2)}`;
 
-  canvas.width = ratio * innerWidth;
-  canvas.height = ratio * innerHeight;
-
   canvas.style.width = `${innerWidth}px`;
   canvas.style.height = `${innerHeight}px`;
+
+  // This needs to be set after the style size.
+  canvas.width = ratio * innerWidth;
+  canvas.height = ratio * innerHeight;
 
   ctx.fillStyle = COLOR_PALETTE.BACKGROUND;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
