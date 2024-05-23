@@ -215,7 +215,7 @@ const drawEdge = (source: Position, target: Position) => {
   ctx.stroke();
 };
 
-const fpsText = createElement("div", {
+const fpsText = createElement("pre", {
   style: {
     position: "fixed",
     top: "4px",
@@ -231,12 +231,17 @@ document.body.append(fpsText);
 let lastTime = performance.now();
 
 const render = (time: DOMHighResTimeStamp) => {
+  const ratio = Math.min(devicePixelRatio, 2);
+
   const fps = 1000 / (time - lastTime);
-  fpsText.textContent = `FPS: ${fps.toFixed(2)}`;
   lastTime = time;
 
-  canvas.width = devicePixelRatio * innerWidth;
-  canvas.height = devicePixelRatio * innerHeight;
+  fpsText.textContent = `FPS: ${fps.toFixed(2)}`;
+  fpsText.textContent += `\nRATIO: ${ratio}`;
+  fpsText.textContent += `\nNODES: ${graph.nodes.length}`;
+
+  canvas.width = ratio * innerWidth;
+  canvas.height = ratio * innerHeight;
 
   canvas.style.width = "100vw";
   canvas.style.height = "100vh";
@@ -244,11 +249,8 @@ const render = (time: DOMHighResTimeStamp) => {
   ctx.fillStyle = COLOR_PALETTE.BACKGROUND;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.translate(
-    devicePixelRatio / canvasPosition.x,
-    devicePixelRatio / canvasPosition.y,
-  );
-  ctx.scale(devicePixelRatio, devicePixelRatio);
+  ctx.translate(ratio / canvasPosition.x, ratio / canvasPosition.y);
+  ctx.scale(ratio, ratio);
 
   for (const edge of graph.edges) {
     const sourcePosition = nodePositions.get(edge.source);
