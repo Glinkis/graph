@@ -179,6 +179,11 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
   }
 });
 
+// Prevent scrolling on touch devices.
+document.body.addEventListener("touchmove", (event) => event.preventDefault(), {
+  passive: false,
+});
+
 const drawNode = (position: Position) => {
   const x = position.x + canvasPosition.x;
   const y = position.y + canvasPosition.y;
