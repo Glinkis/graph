@@ -231,7 +231,7 @@ document.body.append(fpsText);
 let lastTime = performance.now();
 
 const render = (time: DOMHighResTimeStamp) => {
-  const ratio = Math.min(devicePixelRatio, 1);
+  const ratio = Math.min(devicePixelRatio, 2);
 
   const fps = 1000 / (time - lastTime);
   lastTime = time;
