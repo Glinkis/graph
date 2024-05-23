@@ -10,6 +10,7 @@ const NODE_BORDER_WIDTH = 8;
 const EDGE_WIDTH = 8;
 
 const canvas = document.createElement("canvas");
+canvas.style.touchAction = "none";
 document.body.append(canvas, resetPositionButton, editModeToggle);
 
 const ctx = canvas.getContext("2d");
