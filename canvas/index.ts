@@ -4,8 +4,8 @@ import { editMode, editModeToggle } from "./edit-mode-toggle.js";
 import { resetPositionButton } from "./reset-position-button.js";
 
 const NODE_INNER_RADIUS = 16;
+
 const NODE_BORDER_WIDTH = 8;
-const NODE_OUTER_RADIUS = NODE_INNER_RADIUS + NODE_BORDER_WIDTH;
 
 const EDGE_WIDTH = 8;
 
@@ -74,6 +74,11 @@ function getDistanceFromPointer(event: PointerEvent, position: Position) {
   );
 }
 
+function isOverNode(event: PointerEvent, position: Position) {
+  const outerRadius = NODE_OUTER_RADIUS + NODE_BORDER_WIDTH;
+  return getDistanceFromPointer(event, position) < outerRadius;
+}
+
 resetPositionButton.addEventListener("click", () => {
   canvasPosition.x = 0;
   canvasPosition.y = 0;
@@ -91,9 +96,7 @@ canvas.addEventListener("pointermove", (event: PointerEvent) => {
 canvas.addEventListener("pointerdown", (event: PointerEvent) => {
   if (editMode === "move") {
     for (const node of nodePositions.values()) {
-      const distance = getDistanceFromPointer(event, node);
-
-      if (distance < NODE_OUTER_RADIUS) {
+      if (isOverNode(event, node)) {
         const initialPosition: Position = {
           x: event.clientX - node.x,
           y: event.clientY - node.y,
@@ -133,9 +136,7 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
 
   if (editMode === "add-edge") {
     for (const [node1Id, node1] of nodePositions) {
-      const distance = getDistanceFromPointer(event, node1);
-
-      if (distance < NODE_OUTER_RADIUS) {
+      if (isOverNode(event, node1)) {
         const move = (event: PointerEvent) => {
           dragPositions.source = node1;
           dragPositions.target = getPointerPosition(event);
@@ -143,9 +144,7 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
 
         const cleanup = (event: PointerEvent) => {
           for (const [node2Id, node2] of nodePositions) {
-            const distance = getDistanceFromPointer(event, node2);
-
-            if (distance < NODE_OUTER_RADIUS) {
+            if (isOverNode(event, node2)) {
               graph.addEdge(node1Id, node2Id);
             }
           }
@@ -171,9 +170,7 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
 
   if (editMode === "remove-node") {
     for (const [nodeId, node] of nodePositions) {
-      const distance = getDistanceFromPointer(event, node);
-
-      if (distance < NODE_OUTER_RADIUS) {
+      if (isOverNode(event, node)) {
         graph.removeNode(nodeId);
         nodePositions.delete(nodeId);
       }
@@ -189,9 +186,7 @@ const drawNode = (position: Position) => {
   ctx.arc(x, y, NODE_INNER_RADIUS, 0, Math.PI * 2);
 
   if (pointer.moveEvent) {
-    const distance = getDistanceFromPointer(pointer.moveEvent, position);
-
-    if (distance < NODE_OUTER_RADIUS) {
+    if (isOverNode(pointer.moveEvent, position)) {
       ctx.lineWidth = NODE_BORDER_WIDTH;
       ctx.strokeStyle = COLOR_PALETTE.QUATERNARY;
       ctx.stroke();
