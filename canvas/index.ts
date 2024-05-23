@@ -75,7 +75,7 @@ function getDistanceFromPointer(event: PointerEvent, position: Position) {
 }
 
 function isOverNode(event: PointerEvent, position: Position) {
-  const outerRadius = NODE_OUTER_RADIUS + NODE_BORDER_WIDTH;
+  const outerRadius = NODE_INNER_RADIUS + NODE_BORDER_WIDTH;
   return getDistanceFromPointer(event, position) < outerRadius;
 }
 
