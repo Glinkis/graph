@@ -1,5 +1,6 @@
 import { Graph } from "../src/index.js";
 import { COLOR_PALETTE } from "./constants.js";
+import { resetPositionButton } from "./reset-position-button.js";
 
 const NODE_INNER_RADIUS = 16;
 const NODE_BORDER_WIDTH = 8;
@@ -9,6 +10,7 @@ const EDGE_WIDTH = 8;
 
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
+document.body.appendChild(resetPositionButton);
 
 const ctx = canvas.getContext("2d");
 if (ctx == null) {
@@ -71,6 +73,11 @@ function getDistanceFromPointer(event: PointerEvent, position: Position) {
     pointerPosition.y - position.y,
   );
 }
+
+resetPositionButton.addEventListener("click", () => {
+  canvasPosition.x = 0;
+  canvasPosition.y = 0;
+});
 
 // Disable right-click context menu.
 canvas.oncontextmenu = () => {
@@ -231,26 +238,3 @@ const render = () => {
 };
 
 requestAnimationFrame(render);
-
-const resetPositionButton = document.createElement("button");
-resetPositionButton.textContent = "Reset Position";
-Object.assign(resetPositionButton.style, {
-  position: "fixed",
-  top: "16px",
-  right: "16px",
-  padding: "8px 12px",
-  fontSize: "16px",
-  fontWeight: "bold",
-  background: COLOR_PALETTE.PRIMARY,
-  color: COLOR_PALETTE.BACKGROUND,
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-});
-
-document.body.appendChild(resetPositionButton);
-
-resetPositionButton.addEventListener("click", () => {
-  canvasPosition.x = 0;
-  canvasPosition.y = 0;
-});
