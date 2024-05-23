@@ -241,8 +241,8 @@ const render = (time: DOMHighResTimeStamp) => {
   canvas.width = ratio * innerWidth;
   canvas.height = ratio * innerHeight;
 
-  canvas.style.width = "100vw";
-  canvas.style.height = "100vh";
+  canvas.style.width = `${innerWidth}px`;
+  canvas.style.height = `${innerHeight}px`;
 
   ctx.fillStyle = COLOR_PALETTE.BACKGROUND;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
