@@ -1,5 +1,6 @@
 import { Graph } from "../src/index.js";
 import { COLOR_PALETTE } from "./constants.js";
+import { createElement } from "./create-element.js";
 import { editMode, editModeToggle } from "./edit-mode-toggle.js";
 import { resetPositionButton } from "./reset-position-button.js";
 
@@ -214,7 +215,26 @@ const drawEdge = (source: Position, target: Position) => {
   ctx.stroke();
 };
 
-const render = () => {
+const fpsText = createElement("div", {
+  style: {
+    position: "fixed",
+    top: "4px",
+    left: "4px",
+    padding: "8px",
+    color: "white",
+    background: "rgba(0, 0, 0, 0.5)",
+    borderRadius: "4px",
+  },
+});
+document.body.append(fpsText);
+
+let lastTime = performance.now();
+
+const render = (time: DOMHighResTimeStamp) => {
+  const fps = 1000 / (time - lastTime);
+  fpsText.textContent = `FPS: ${fps.toFixed(2)}`;
+  lastTime = time;
+
   canvas.width = devicePixelRatio * innerWidth;
   canvas.height = devicePixelRatio * innerHeight;
 
