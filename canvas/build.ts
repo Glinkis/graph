@@ -9,13 +9,13 @@ async function build() {
   });
 }
 
-if ("BUILD_ONCE" in process.env) {
-  console.log("Building canvas once...");
-  await build();
-} else {
+if (process.argv.includes("--watch")) {
   console.log("Building canvas in watch mode...");
   watch(import.meta.dir, async () => {
     console.log("Rebuilding canvas...");
     await build();
   });
+} else {
+  console.log("Building canvas once...");
+  await build();
 }

@@ -7,6 +7,7 @@
     "test": "bun test",
     "test:w": "bun test --watch",
     "build": "tsup",
+    "dev:canvas": "bun canvas/build.ts --watch",
     "build:canvas": "bun canvas/build.ts"
   },
   "devDependencies": {
