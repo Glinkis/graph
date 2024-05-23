@@ -1,7 +1,20 @@
+const style = getComputedStyle(document.body);
+
+// Allows accessing CSS vaiables in JS.
 export const COLOR_PALETTE = {
-  BACKGROUND: "#2a3d66",
-  PRIMARY: "#3eb489",
-  SECONDARY: "#ff6f61",
-  TERTIARY: "#778899",
-  QUATERNARY: "#f7f9fb",
+  get BACKGROUND() {
+    return style.getPropertyValue("--background-color");
+  },
+  get PRIMARY() {
+    return style.getPropertyValue("--primary-color");
+  },
+  get SECONDARY() {
+    return style.getPropertyValue("--secondary-color");
+  },
+  get TERTIARY() {
+    return style.getPropertyValue("--tertiary-color");
+  },
+  get QUATERNARY() {
+    return style.getPropertyValue("--quaternary-color");
+  },
 };
