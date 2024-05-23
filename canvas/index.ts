@@ -10,9 +10,21 @@ const NODE_BORDER_WIDTH = 8;
 
 const EDGE_WIDTH = 8;
 
+const fpsText = createElement("pre", {
+  style: {
+    position: "fixed",
+    top: "4px",
+    left: "4px",
+    padding: "8px",
+    color: "white",
+    background: "rgba(0, 0, 0, 0.5)",
+    borderRadius: "4px",
+  },
+});
+
 const canvas = document.createElement("canvas");
 canvas.style.touchAction = "none";
-document.body.append(canvas, resetPositionButton, editModeToggle);
+document.body.append(fpsText, canvas, resetPositionButton, editModeToggle);
 
 const ctx = canvas.getContext("2d");
 if (ctx == null) {
@@ -214,19 +226,6 @@ const drawEdge = (source: Position, target: Position) => {
   ctx.lineTo(target.x + canvasPosition.x, target.y + canvasPosition.y);
   ctx.stroke();
 };
-
-const fpsText = createElement("pre", {
-  style: {
-    position: "fixed",
-    top: "4px",
-    left: "4px",
-    padding: "8px",
-    color: "white",
-    background: "rgba(0, 0, 0, 0.5)",
-    borderRadius: "4px",
-  },
-});
-document.body.append(fpsText);
 
 let lastTime = performance.now();
 
