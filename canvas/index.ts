@@ -56,10 +56,19 @@ const dragPositions: {
   target: null,
 };
 
+function getPointerPosition(event: PointerEvent) {
+  return {
+    x: event.clientX - canvasPosition.x,
+    y: event.clientY - canvasPosition.y,
+  };
+}
+
 function getDistanceFromPointer(event: PointerEvent, position: Position) {
+  const pointerPosition = getPointerPosition(event);
+
   return Math.hypot(
-    event.clientX - position.x - canvasPosition.x,
-    event.clientY - position.y - canvasPosition.y,
+    pointerPosition.x - position.x,
+    pointerPosition.y - position.y,
   );
 }
 
@@ -107,10 +116,7 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
       if (distance < NODE_OUTER_RADIUS) {
         const move = (event: PointerEvent) => {
           dragPositions.source = node1;
-          dragPositions.target = {
-            x: event.clientX - canvasPosition.x,
-            y: event.clientY - canvasPosition.y,
-          };
+          dragPositions.target = getPointerPosition(event);
         };
 
         const cleanup = (event: PointerEvent) => {
@@ -136,10 +142,7 @@ canvas.addEventListener("pointerdown", (event: PointerEvent) => {
     }
   }
 
-  const initialPosition: Position = {
-    x: event.clientX - canvasPosition.x,
-    y: event.clientY - canvasPosition.y,
-  };
+  const initialPosition = getPointerPosition(event);
 
   const move = (event: PointerEvent) => {
     canvasPosition.x = event.clientX - initialPosition.x;
